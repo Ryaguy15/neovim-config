@@ -102,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -663,7 +663,8 @@ require('lazy').setup({
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettier', 'prettierd' } },
       },
     },
   },
@@ -740,8 +741,8 @@ require('lazy').setup({
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
           --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<Tab>'] = cmp.mapping.select_next_item(),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -867,6 +868,32 @@ require('lazy').setup({
       --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    end,
+  },
+  {
+    'ThePrimeagen/harpoon',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function(_, opts)
+      require('telescope').load_extension 'harpoon'
+      require('harpoon').setup {}
+
+      local function harpoon_num_nav(number)
+        return function()
+          require('harpoon.ui').nav_file(number)
+        end
+      end
+
+      vim.keymap.set('n', '<leader>ha', require('harpoon.mark').add_file, { desc = 'Add current file to harpoon' })
+      vim.keymap.set('n', '<leader>hm', require('harpoon.ui').toggle_quick_menu, { desc = 'Show harpoon menu' })
+      vim.keymap.set('n', '<leader>hn', require('harpoon.ui').nav_next, { desc = 'Move to next harpooned file' })
+      vim.keymap.set('n', '<leader>hN', require('harpoon.ui').nav_prev, { desc = 'Move to previous harpooned file' })
+
+      vim.keymap.set('n', '<leader>h1', harpoon_num_nav(1), { desc = 'Go to harpoon file 1' })
+      vim.keymap.set('n', '<leader>h2', harpoon_num_nav(2), { desc = 'Go to harpoon file 2' })
+      vim.keymap.set('n', '<leader>h3', harpoon_num_nav(3), { desc = 'Go to harpoon file 3' })
+      vim.keymap.set('n', '<leader>h4', harpoon_num_nav(4), { desc = 'Go to harpoon file 4' })
     end,
   },
 
