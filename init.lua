@@ -190,6 +190,12 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Ryan's favorite quick commands
+-- quick insert exit
+vim.keymap.set('i', 'jj', '<Esc>')
+-- quick save for current buffer
+vim.keymap.set('n', ',w', vim.cmd.write)
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -729,7 +735,7 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
@@ -873,12 +879,12 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
